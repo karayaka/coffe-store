@@ -12,7 +12,7 @@
       >
         <v-col
           cols="12"
-          md="7"
+          md="8"
           offset-md="5"
         >
           <h1 class="display-3 font-weight-light">
@@ -27,7 +27,7 @@
             color="primary"
             depressed
           >
-            Subscribe
+            MENÜ
           </v-btn>
         </v-col>
       </v-row>

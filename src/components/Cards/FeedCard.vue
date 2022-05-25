@@ -10,7 +10,7 @@
       href="#!"
     >
       <v-img
-        src="../../assets/imgs/adventurealtitude.jpg"
+        :src="src"
         height="100%"
         gradient="rgba(0, 0, 0, .42), rgba(0, 0, 0, .42)"
       >
@@ -26,29 +26,14 @@
               small
               @click.stop=""
             >
-              Category
+              {{caption}}
             </v-chip>
 
             <h3 class="title font-weight-bold mb-2">
-              Başlık
+              {{title}}
             </h3>
-
-            <div class="caption">
-              Author<br>Date
-            </div>
           </v-col>
 
-          <v-col align-self="end">
-            <v-chip
-              class="text-uppercase ma-0"
-              color="primary"
-              label
-              small
-              @click.stop=""
-            >
-              Read More
-            </v-chip>
-          </v-col>
         </v-row>
       </v-img>
     </base-card>
@@ -63,10 +48,19 @@
         type: Number,
         required: true,
       },
-      /*value: {
-        type: Object,
-        default: () => ({}),
-      },*/
+      caption:{
+        type:String,
+        default:""
+      },
+      title:{
+        type:String,
+        default:""
+      },
+      src:{
+        type:String,
+        default:"../../assets/imgs/adventurealtitude.jpg"
+      }
+
     },
   }
 </script>

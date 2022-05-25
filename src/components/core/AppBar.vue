@@ -3,11 +3,6 @@
     app
     flat
   >
-    <v-app-bar-nav-icon
-      class="hidden-md-and-up"
-      @click="toggleDrawer"
-    />
-
     <v-container class="mx-auto py-0">
       <v-row align="center">
         <v-img
@@ -23,27 +18,43 @@
         <v-btn          
           class="hidden-sm-and-down"
           text
-          @click="onClick($event, link)"
+          
         >
           Ana Sayfa
         </v-btn>
         <v-btn          
           class="hidden-sm-and-down"
           text
-          @click="onClick($event, link)"
+          
         >
           Menü
         </v-btn>
 
-        <v-spacer />
-
-        <v-text-field
-          append-icon="mdi-magnify"
-          flat
-          hide-details
-          solo-inverted
-          style="max-width: 300px;"
-        />
+        
+        <v-spacer/>
+        <v-btn icon>
+        <v-icon>mdi-account-circle</v-icon>
+      </v-btn>
+      <v-btn v-on="on" icon>
+        <v-badge
+          content="2"
+          value="2"
+          color="green"
+          overlap
+        >
+          <v-icon>mdi-bell</v-icon>
+        </v-badge>
+      </v-btn>
+      <v-btn v-on="on" href="/cart" icon>
+        <v-badge
+          content="2"
+          value="2"
+          color="green"
+          overlap
+        >
+          <v-icon>mdi-cart</v-icon>
+        </v-badge>
+      </v-btn>
       </v-row>
     </v-container>
   </v-app-bar>
@@ -55,23 +66,14 @@ export default {
     name: 'CoreAppBar',
     data(){
         return{
-            links:[
-                {text:"Anasayfa",},
-                {text:"satfa",}
-            ],
-
+           
         }
     },
     computed: {
     
     },
     methods: {
-
-        onClick (e, item) {
-            e.stopPropagation()
-            if (item.to || !item.href) return
-            this.$vuetify.goTo(item.href.endsWith('!') ? 0 : item.href)
-        },
+      
     },
   }
 </script>
