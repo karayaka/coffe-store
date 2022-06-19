@@ -1,7 +1,7 @@
 <template>
   <v-btn
     :style="styles"
-    color="primary"
+    color="secondary"
     fab
     small
     v-bind="$attrs"

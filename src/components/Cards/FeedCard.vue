@@ -21,8 +21,8 @@
             <v-chip
               label
               class="mx-0 mb-2 text-uppercase"
-              color="grey darken-3"
-              text-color="white"
+              color="secondary"
+              text-color="primary"
               small
               @click.stop=""
             >
