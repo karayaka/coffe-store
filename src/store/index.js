@@ -3,6 +3,7 @@ import Vuex from 'vuex'
 import globalMessage from './modules/globalMessage'
 import product from './modules/product'
 import api from '../api/index'
+import gallery from './modules/gallery'
 
 Vue.use(Vuex)
 
@@ -140,6 +141,7 @@ export default new Vuex.Store({
   },
   modules: {
     globalMessage,
-    product
+    product,
+    gallery
   }
 })

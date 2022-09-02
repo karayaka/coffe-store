@@ -1,5 +1,4 @@
 <template>
-
   <v-row justify="center">
     <v-dialog
       v-model="openForm"
@@ -12,6 +11,7 @@
           dark
           color="primary"
         >
+        
           <v-btn
             icon
             dark
@@ -64,6 +64,3 @@ export default {
     }
 }
 </script>
-
-<style>
-</style>

@@ -26,7 +26,8 @@
         </v-container>
           <div v-else class="row text-center mt-5">
             <div class="col-md-3 col-sm-6 col-xs-12" v-for="pro in products" :key="pro.id">
-              <v-hover v-slot:default="{ hover }">
+              <!-- <v-hover v-slot:default="{ hover }"> bu bölümler sipariş et modüü ile açılacak -->
+                <v-hover >
                 <v-card
                   class="mx-auto"
                   color="grey lighten-4"  
@@ -36,10 +37,10 @@
                     class="white--text align-end"
                     :aspect-ratio="16/9"
                     height="200px"
-                    :src="pro.image"
+                    :src="productUrl+pro.image"
                   >
                     <v-card-title>{{pro.name}}</v-card-title>
-                    <v-expand-transition>
+                   <!-- <v-expand-transition>
                       <div
                         v-if="hover"
                         class="d-flex transition-fast-in-fast-out white darken-2 v-card--reveal display-3 white--text"
@@ -48,7 +49,7 @@
                         <v-btn v-if="hover" href="/product" class="" outlined>Sipariş</v-btn>
                       </div>
 
-                    </v-expand-transition>
+                    </v-expand-transition>-->
                   </v-img>
                   <v-card-text class="text--primary">
                     <div><a href="/product" style="text-decoration: none">{{pro.desc}}</a></div>
@@ -67,6 +68,7 @@
 
 <script>
 import SideFilter from '@/components/core/SideFilter.vue'
+import confing from '@/api/config.js'
  import { mapActions ,mapGetters} from 'vuex'
     export default {
         components:{
@@ -85,7 +87,8 @@ import SideFilter from '@/components/core/SideFilter.vue'
           })
 
         },
-        data: () => ({           
+        data: () => ({
+          productUrl:confing.ProductImages,     
           
         }),
         methods: {

@@ -1,7 +1,7 @@
 <template>
   <base-card dark>
     <v-img
-      :src="require('@/assets/imgs/desing/banner.jpeg')"
+      :src="image"
       class="grey lighten-2"
       height="400"
       width="100%"
@@ -15,20 +15,10 @@
           md="8"
           offset-md="6"
         >
-          <h1 class="display-2 font-weight-light">
-            STRBORN Muhteşem Kahve
+          <h1 :color="color" class="display-2 font-weight-light">
+            {{title}}
           </h1>
 
-          <div class="subheading text-uppercase pl-2 mb-4">
-            Kendi Kahveni Bul Rahatlığın Tadını Çıkar
-          </div>
-
-          <v-btn
-            color="secondary"
-            depressed
-          >
-            MENÜ
-          </v-btn>
         </v-col>
       </v-row>
     </v-img>
@@ -38,5 +28,17 @@
 <script>
   export default {
     name: 'HomeBanner',
+    props:{
+        title:{
+            default:"",
+            type:String,            
+        },
+        image:{
+          default:""
+        },
+        color:{
+          default:"white",
+        }
+    }
   }
 </script>

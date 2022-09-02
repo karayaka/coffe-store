@@ -2,8 +2,9 @@ import store from '@/store'
 import router from '@/router';
 import axios from 'axios';
 const init= axios.create({
-    //baseURL:"https://cagnaz.com/service/api",//BaseUrl 
-    baseURL:"https://localhost:5001/api"
+    baseURL: "http://panel.straborn.com/service/api"
+    //baseURL:"https://apptest.cagnaz.com/service/api",//BaseUrl 
+    //baseURL:"https://localhost:5001/api"
 })
 axios.defaults.headers.post['Content-Type']="multipart/form-data";
 
