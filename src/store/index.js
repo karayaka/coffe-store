@@ -17,9 +17,11 @@ export default new Vuex.Store({
       name:"",
       surname:"",     
     },
+    userid:0,
     appToken:"",
     smsToken:"",
-    
+    loginLoading:false,
+    showVerificationModal:false,
   },
   getters: {
     getUserModel(state){
@@ -33,6 +35,9 @@ export default new Vuex.Store({
           return null;
         }        
       }
+    },
+    getUserId(state){
+      return state.userid;
     },
     getAppToken(state){
       if(state.appToken==""||state.appToken==null){
@@ -59,10 +64,12 @@ export default new Vuex.Store({
     getLoginLoading(state){
       return state.loginLoading;
     },
-    
     getSmsToken(state){
       return state.smsToken;
     },
+    getVerificationModal(state){
+      return state.showVerificationModal;
+    }
     
   },
   mutations: {
@@ -82,10 +89,15 @@ export default new Vuex.Store({
     setUserInfo(state,value){
       state.userInfo=value;
     },
-    
     setSmsToken(state,value){
       state.smsToken=value;
     },
+    setVerificationModal(state,value){
+      state.showVerificationModal=value;
+    },
+    setUserId(state,payload){
+      state.userid=payload;
+    }
     
   },
   actions: {
@@ -98,9 +110,9 @@ export default new Vuex.Store({
       var result= await api.post("/Security/Login",userModel);
       if(result!=undefined||result!==-1){
         var userInfo={
-          id:result.id,
-          name:result.name,
-          surname:result.surname
+          id:result.data.id,
+          name:result.data.name,
+          surname:result.data.surname
         }
         vuexContext.commit('setLoginModel',userModel);
         vuexContext.commit('setUserInfo',userInfo);
@@ -113,21 +125,8 @@ export default new Vuex.Store({
       vuexContext.commit('setLoginLoading',true);
       var result= await api.post("/Security/Register",payload);
       if(result!=undefined||result!==-1){
-        console.log(result);
-        //buraya bakacaz 130 saıtra kadar
-        var userInfo={
-          id:result.id,
-          name:payload.name,
-          surname:payload.surname
-        }
-        let userModel={
-          UserName:payload.phoneNumber,
-          Password:payload.password,
-        }
-        
-        vuexContext.commit('setLoginModel',userModel);
-        vuexContext.commit('setUserInfo',userInfo);
-        
+        vuexContext.commit('setVerificationModal',true);
+        vuexContext.commit('setUserId',result.data.id);
       }
       vuexContext.commit('setLoginLoading',false);
       return result;
@@ -137,6 +136,48 @@ export default new Vuex.Store({
       vuexContext.commit('setLoginLoading',true);
       console.log(payload);
       vuexContext.commit('setLoginLoading',false);
+    },
+    async verifyNumber(vuexContext,payload){
+      vuexContext.commit('setLoginLoading',true);
+      var result= await api.post("/Security/VerifyPhoneNumberRegister",payload);
+      if(result!=undefined||result!==-1){
+        var userInfo={
+          id:result.data.id,
+          name:result.data.name,
+          surname:result.data.surname
+        };
+        var userModel= {
+          phoneNumber: result.data.phoneNumber,
+          password: payload.password,
+        };
+        
+        vuexContext.commit('setLoginModel',userModel);
+        vuexContext.commit('setUserInfo',userInfo);
+        vuexContext.commit('setAppToken',result.data.token);
+        //route home
+      }
+      
+      vuexContext.commit('setLoginLoading',false);
+      console.log(result);
+      return result;
+      
+    },
+    async resentSms(vuexContext){
+      vuexContext.commit('setLoginLoading',true);
+      var result=await api.get("/Security/ResendSMSCode/"+vuexContext.state.userid);
+      if(result!=undefined||result!==-1){
+        //
+      }
+      vuexContext.commit('setLoginLoading',false);
+      return result;
+    },
+    async forgetPassword(vuexContext,payload){
+      vuexContext.commit('setLoginLoading',true);
+      var result=await api.get("/Security/ResetPassword/"+payload.phoneNumber+"/web");
+      if(result!=undefined||result!==-1){
+        //
+      }
+
     }
   },
   modules: {

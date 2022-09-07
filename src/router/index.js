@@ -104,7 +104,6 @@ router.beforeEach((to, from, next) => {
     '/sales-agreement',
     '/security-policy',
   ];
-  console.log(to.path);
   const authRequired = !publicPages.includes(to.path);
   const loggedIn = localStorage.getItem('login-token');
 

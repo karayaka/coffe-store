@@ -2,9 +2,9 @@ import store from '@/store'
 import router from '@/router';
 import axios from 'axios';
 const init= axios.create({
-    baseURL: "http://panel.straborn.com/service/api"
+    //baseURL: "http://panel.straborn.com/service/api"
     //baseURL:"https://apptest.cagnaz.com/service/api",//BaseUrl 
-    //baseURL:"https://localhost:5001/api"
+    baseURL:"https://localhost:5001/api"
 })
 axios.defaults.headers.post['Content-Type']="multipart/form-data";
 
@@ -36,7 +36,6 @@ init.interceptors.request.use(config => {
   });
   // Add a response interceptor
 init.interceptors.response.use((response) => {
-  console.log(response);
   var result={};
   if(response.status==401){
     result.type=0;
