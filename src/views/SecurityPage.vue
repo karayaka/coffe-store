@@ -97,7 +97,7 @@
                                         </v-col>
                                         <v-spacer></v-spacer>
                                         <v-col class="d-flex" cols="12" sm="3" xsm="12" align-end>
-                                            <v-btn x-large block :disabled="!valid" color="secondary" @click="forgatPassword"> Gönder
+                                            <v-btn x-large block :disabled="!valid" color="secondary" :loading="loginLoading" @click="forgatPassword"> Gönder
                                             </v-btn>
                                         </v-col>
                                     </v-row>
@@ -160,12 +160,12 @@
             :title="'Şifre Sıfırlama'"
         >
             <template v-slot:form>
-                <v-form v-model="veificatioFormValid">
+                <v-form ref="forgatPasswordValidator" v-model="valid">
                     <v-row>
                         <v-col cols="12" md="12">
                             <v-otp-input
                                 :length="otpLen"
-                                v-model="verificationCode"
+                                v-model="resetPasswordConfirmeModel.confirmeCode"
                                 type="number"                    
                             >
                             </v-otp-input>
@@ -181,7 +181,7 @@
                         <v-col cols="12">
                             <v-text-field block v-model="resetPasswordConfirmeModel.verify"
                                 :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
-                                :rules="[rules.required, passwordMatch]" :type="show1 ? 'text' : 'password'"
+                                :rules="[rules.required, forgetPasswordMatch]" :type="show1 ? 'text' : 'password'"
                                 name="input-10-1" label="Şifre Doğrula" counter
                                 @click:append="show1 = !show1"></v-text-field>
                         </v-col>
@@ -193,15 +193,15 @@
                 <v-btn
                     color="red darken-1"
                     dark
-                    @click="veificatioFormValidModal = false"
+                    @click="showResetPasswordModal = false"
                 >Kapat
                 </v-btn>
                 <v-btn
                     :loading="loginLoading"
                     color="blue darken-1"
                     dark
-                    @click="verifyNumber"
-                    :disabled="!isActive"                
+                    @click="resetPassword"
+                    :disabled="!isActiveForet"                
                 > Onayla
                 </v-btn>
             </template>
@@ -224,9 +224,15 @@ export default {
         passwordMatch() {
             return () => this.registerModel.password === this.registerModel.verify || "Şifreler Eşit Olmalı";
         },
+        forgetPasswordMatch() {
+            return () => this.resetPasswordConfirmeModel.password === this.resetPasswordConfirmeModel.verify || "Şifreler Eşit Olmalı";
+        },
         isActive () {
             return this.verificationCode.length === this.otpLen
-      },
+        },
+        isActiveForet () {
+            return this.resetPasswordConfirmeModel.confirmeCode.length === this.otpLen
+        },
     },
     methods: {
         ...mapMutations({
@@ -237,6 +243,8 @@ export default {
             registerAsync: "register",
             verifyNumberAsync:"verifyNumber",
             reSentSmsAsync:"resentSms",
+            forgetPasswordAsync:"forgetPassword",
+            resetPasswordAsync:"resetPassword",
         }),
         async login() {
             if (this.$refs.loginForm.validate()) {
@@ -277,8 +285,24 @@ export default {
             await this.reSentSmsAsync();
             
         },
-        forgatPassword(){
-            //paralomaı unuttum api yazılacak ve yeni parala modal ile gönderilecek!
+        async forgatPassword(){
+           
+            //this.showResetPasswordModal=true;
+            var result= await this.forgetPasswordAsync(this.resetPasswordConfirmeModel.phoneNumber)
+            if(result.type==2){
+                this.resetPasswordConfirmeModel.id=result.data.id;
+                this.showResetPasswordModal=true;
+            }
+        },
+        async resetPassword(){
+            if (this.$refs.forgatPasswordValidator.validate()) {
+                var result=await this.resetPasswordAsync(this.resetPasswordConfirmeModel)
+                if(result.type==2){
+                    this.showResetPasswordModal=false
+                    this.tab=0;
+                }
+            }
+
         }
     },
     data: () => ({

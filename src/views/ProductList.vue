@@ -1,7 +1,6 @@
 <template>
-
-    
-      <div class="row">
+  <div>
+    <div class="row">
         <div
          class="col-md-2 col-sm-2 col-xs-12 mt-7"
         >
@@ -26,8 +25,8 @@
         </v-container>
           <div v-else class="row text-center mt-5">
             <div class="col-md-3 col-sm-6 col-xs-12" v-for="pro in products" :key="pro.id">
-              <!-- <v-hover v-slot:default="{ hover }"> bu bölümler sipariş et modüü ile açılacak -->
-                <v-hover >
+              <v-hover v-slot:default="{ hover }">
+                <!--<v-hover >-->
                 <v-card
                   class="mx-auto"
                   color="grey lighten-4"  
@@ -40,19 +39,19 @@
                     :src="productUrl+pro.image"
                   >
                     <v-card-title>{{pro.name}}</v-card-title>
-                   <!-- <v-expand-transition>
+                   <v-expand-transition>
                       <div
                         v-if="hover"
                         class="d-flex transition-fast-in-fast-out white darken-2 v-card--reveal display-3 white--text"
                         style="height: 100%;"
                       >
-                        <v-btn v-if="hover" href="/product" class="" outlined>Sipariş</v-btn>
+                        <v-btn v-if="hover" @click="openOrderFormAsync(pro.id)" class="" outlined>Sipariş</v-btn>
                       </div>
 
-                    </v-expand-transition>-->
+                    </v-expand-transition>
                   </v-img>
                   <v-card-text class="text--primary">
-                    <div><a href="/product" style="text-decoration: none">{{pro.desc}}</a></div>
+                    <div><a @click="openOrderFormAsync(pro.id)" style="text-decoration: none">{{pro.desc}}</a></div>
                     <div>{{pro.price}}₺</div>
                   </v-card-text>
                 </v-card>
@@ -62,43 +61,56 @@
           
         </div>
       </div>
-    
+      <product-chose-modal>
 
+      </product-chose-modal>
+  </div>
 </template>
 
 <script>
-import SideFilter from '@/components/core/SideFilter.vue'
+import SideFilter from '@/components/core/SideFilter.vue';
+import ProductChoseModal from '@/components/ProducComponent/ProductChoseModal.vue';
 import confing from '@/api/config.js'
+
  import { mapActions ,mapGetters} from 'vuex'
+
     export default {
         components:{
-            SideFilter,//imafge atanacak ve card tittle
+            SideFilter,
+            ProductChoseModal,//imafge atanacak ve card tittle
         },
         mounted() {
-          this.getProductAsync(0);
+          this.getProductsAsync(0);
           this.getCategoys();
+          //console.log(this.isAuth);
         },
         computed:{
           ...mapGetters({
             categorys:'product/getPageCategorys',
-            categoryLoading:'product/getCategoryLoadind',
-            products:'product/getProduct',
-            pageLoading:'product/getPageLoading'
-          })
-
+            categoryLoading:'product/getCategoryLoading',
+            products:'product/getProducts',
+            pageLoading:'product/getPageLoading',
+            isAuth:'IsAuth',
+          }),
         },
         data: () => ({
-          productUrl:confing.ProductImages,     
-          
+          productUrl:confing.ProductImages,
+          openOrderForm:false,
+          formLoading:false,
+          saveButonLoad:false,
+          hasNotSpesification:false,
+          product:null,
         }),
         methods: {
           ...mapActions({
-            getProductAsync:'product/getProduct',
-            getCategoys:'product/getCategorys'
+            getProductsAsync:'product/getProducts',
+            getCategoys:'product/getCategorys',
+            openOrderFormAsync:'product/openOrderForm'
           }),          
           filterChange(e){
-            this.getProductAsync(e);
-          }
+            this.getProductsAsync(e);
+          },
+          
         },
     }
 </script>

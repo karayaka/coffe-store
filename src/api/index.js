@@ -10,7 +10,7 @@ axios.defaults.headers.post['Content-Type']="multipart/form-data";
 
 
 init.interceptors.request.use(config => {
-  config.headers.Authorization="Bearer "+localStorage.getItem("user-token");//local storage den tokan alınacak
+  config.headers.Authorization="Bearer "+localStorage.getItem("login-token");//local storage den tokan alınacak
     //request post ise form formdataya çeviriliyor  dosya işlemleri test edilecek  
       if(config.method==="post"){
         var form_data = new FormData();
@@ -20,6 +20,7 @@ init.interceptors.request.use(config => {
           if(Array.isArray(cnfData)){
             for (let j = 0; j < cnfData.length; j++) {
               const elmnt = cnfData[j];
+              console.log(elmnt)
               form_data.append(key, elmnt);
             }
           }else{
