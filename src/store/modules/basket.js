@@ -14,7 +14,7 @@ export default {
         neighborhoods:[],
         neighborhoodLoading:false,
         periots:[],
-        
+        orderSaveLoading:false,        
         periotLoading:false,
         orderForm:{
             id:0,
@@ -71,6 +71,9 @@ export default {
         },
         getPeriotsLoading(state){
             return state.periotLoading;
+        },
+        getOrderSaveLoading(state){
+            return state.orderSaveLoading;
         }
     },
     mutations:{
@@ -124,6 +127,9 @@ export default {
         },
         setPeriotsLoadin(state,payload){
             state.periotLoading=payload;
+        },
+        setOrderSaveLoading(state,payload){
+            state.orderSaveLoading=payload;
         }
     },
     actions:{
@@ -143,7 +149,6 @@ export default {
         },
         async changeBasketQuantity(vuexContext,payload){
             vuexContext.commit('setRowLoading',true);
-            console.log('basket');
             var result= await api.post("Basket/ChangeBasketQuantity",payload);
             if(result.type==2){
                 //Kaıt Başarılı Sepete gimek İsteeisin filen diye srullabilir                
@@ -197,9 +202,16 @@ export default {
             }
             vuexContext.commit('setPeriotsLoadin',false);
             return result.data;
+        },
+        async addOrder(vuexContext){
+            vuexContext.commit('setOrderSaveLoading',true);
+
+            var result= await api.post("Order/AddOrder",vuexContext.state.orderForm);
+            if(result.type==2){
+                //Kaıt Başarılı Sepete gimek İsteeisin filen diye srullabilir                
+            }
+            vuexContext.commit('setOrderSaveLoading',false);
+            return result;
         }
-        
-
-
     }
 }

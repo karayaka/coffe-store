@@ -45,13 +45,13 @@
                         class="d-flex transition-fast-in-fast-out white darken-2 v-card--reveal display-3 white--text"
                         style="height: 100%;"
                       >
-                        <v-btn v-if="hover" @click="openOrderFormAsync(pro.id)" class="" outlined>Sipariş</v-btn>
+                        <v-btn v-if="hover" @click="orderForm(pro.id)" class="" outlined>Sipariş</v-btn>
                       </div>
 
                     </v-expand-transition>
                   </v-img>
                   <v-card-text class="text--primary">
-                    <div><a @click="openOrderFormAsync(pro.id)" style="text-decoration: none">{{pro.desc}}</a></div>
+                    <div><a @click="orderForm(pro.id)" style="text-decoration: none">{{pro.desc}}</a></div>
                     <div>{{pro.price}}₺</div>
                   </v-card-text>
                 </v-card>
@@ -73,6 +73,7 @@ import ProductChoseModal from '@/components/ProducComponent/ProductChoseModal.vu
 import confing from '@/api/config.js'
 
  import { mapActions ,mapGetters} from 'vuex'
+import router from '@/router';
 
     export default {
         components:{
@@ -110,6 +111,14 @@ import confing from '@/api/config.js'
           filterChange(e){
             this.getProductsAsync(e);
           },
+          orderForm(id){
+            console.log(this.isAuth);
+           if(this.isAuth){
+            this.openOrderFormAsync(id)
+           }else{
+            router.push('/Security');
+           }
+          }
           
         },
     }

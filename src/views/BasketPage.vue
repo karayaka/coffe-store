@@ -94,101 +94,102 @@
       v-model="orderFormOpen"
     >
       <template v-slot:form>
-        
+        <v-form ref="addOrderValid" lazy-validation>
           <v-row>
-          <v-col cols="12" md="5" sm="11" class="ma-5">
-            <h3>Adres Bilgileri</h3>
-            <v-autocomplete
-              v-model="orderForm.provinceID"
-              :items="provinces"
-              outlined
-              :loading="provincesLoading"
-              item-text="text"
-              item-value="value"
-              label="İl Seçiniz"
-              @change="getDistrictsAsnc"
-            ></v-autocomplete>
-            <v-autocomplete
-              v-model="orderForm.districtID"
-              :items="districts"
-              outlined
-              :loading="districtLoading"
-              item-text="text"
-              item-value="value"
-              label="İlçe Seçiniz"
-              @change="getNeighborhoodsAsync"
-            ></v-autocomplete>
-            <v-autocomplete
-              v-model="orderForm.neighborhoodID"
-              :items="neighborhoods"
-              outlined
-              :loading="neighborhoodsLoading"
-              item-text="text"
-              item-value="value"
-              label="Mahalle Seçiniz"
-            ></v-autocomplete>
-            <v-textarea
-              autocomplete="address"
-              label="Adres Detay"
-              outlined
-              v-model="orderForm.adress"
-            ></v-textarea>
-            <v-autocomplete
-              v-model="orderForm.deliveryPeriotID"
-              :items="periots"
-              outlined
-              :loading="periotsLoading"
-              item-text="text"
-              item-value="value"
-              label="Teslimat Periyotu Seçin"
-            ></v-autocomplete>
+            <v-col cols="12" md="5" sm="11" class="ma-5">
+              <h3 class="mb-5">Adres Bilgileri</h3>
+              <v-autocomplete
+                v-model="orderForm.provinceID"
+                :items="provinces"
+                outlined
+                :loading="provincesLoading"
+                item-text="text"
+                item-value="value"
+                label="İl Seçiniz"
+                @change="getDistrictsAsnc"
+                :rules="req"
+              ></v-autocomplete>
+              <v-autocomplete
+                v-model="orderForm.districtID"
+                :items="districts"
+                outlined
+                :loading="districtLoading"
+                item-text="text"
+                item-value="value"
+                label="İlçe Seçiniz"
+                @change="getNeighborhoodsAsync"
+                :rules="req"
+              ></v-autocomplete>
+              <v-autocomplete
+                v-model="orderForm.neighborhoodID"
+                :items="neighborhoods"
+                outlined
+                :loading="neighborhoodsLoading"
+                item-text="text"
+                item-value="value"
+                label="Mahalle Seçiniz"
+                :rules="req"
+              ></v-autocomplete>
+              <v-textarea
+                autocomplete="address"
+                label="Adres Detay"
+                outlined
+                v-model="orderForm.adress"
+                :rules="req"
+              ></v-textarea>
+              <v-autocomplete
+                v-model="orderForm.deliveryPeriotID"
+                :items="periots"
+                outlined
+                :loading="periotsLoading"
+                item-text="text"
+                item-value="value"
+                label="Teslimat Periyotu Seçin"
+                :rules="req"
+              ></v-autocomplete>
 
-          </v-col>
-          <v-col cols="12" md="6" sm="11" class="ma-5">
-            <h3>Ödeme Bilgileri</h3>
-            <v-text-field v-model="orderForm.cardNumber" 
-              outlined
-              :rules="emailRules"
-              mask="###.###.###-##"
-              label="Kart Numarası" required
-              >
-            </v-text-field>
-            <v-text-field
-              outlined
-              v-model="orderForm.cardNumber" 
-              :rules="emailRules"
-              label="Ad Soyad" required
-              >
-            </v-text-field>
-            <v-row>
-              <v-col cols="12" md="4">
-                <v-select
-                  :items="items"
-                  label="Ay"
-                  outlined
-                ></v-select>
-              </v-col>
-              <v-col cols="12" md="4">
-                <v-select
-                  :items="items"
-                  label="Yıl"
-                  outlined
-                ></v-select>
-              </v-col>
-              <v-col cols="12" md="4">
-                <v-text-field v-model="orderForm.cardNumber"
-                  outlined
-                  :rules="emailRules"
-                  label="CVV" required
-                  >
-                </v-text-field>
-              </v-col>
-            </v-row>
-
-          </v-col>
-
-        </v-row>
-
+            </v-col>
+            <v-col cols="12" md="6" sm="11" class="ma-5">
+              <h3 class="mb-5">Ödeme Bilgileri</h3>
+              <v-text-field v-model="orderForm.cardNumber" 
+                outlined
+                v-mask="'#### #### #### ####'"
+                label="Kart Numarası" required
+                :rules="req"
+                >
+              </v-text-field>
+              <v-text-field
+                outlined
+                v-model="orderForm.cardNameSurname" 
+                label="Ad Soyad"
+                :rules="req"
+                required
+                >
+              </v-text-field>
+              <v-row>              
+                <v-col cols="12" md="6">
+                  <v-text-field v-model="orderForm.cardDate"
+                    outlined
+                    label="Tarih" required
+                    v-mask="'##/##'"
+                    :rules="req"
+                    >
+                  </v-text-field>
+                </v-col>
+                <v-col cols="12" md="6">
+                  <v-text-field v-model="orderForm.cvv"
+                    outlined
+                    label="CVV" required
+                    v-mask="'###'"
+                    :rules="req"
+                    >
+                  </v-text-field>
+                </v-col>
+              </v-row>
+            </v-col>
+          </v-row>
+        </v-form>
+        
      
         
         
@@ -197,7 +198,8 @@
           <v-btn
               icon
               dark
-              :loading="false"
+              :loading="orderSaveLoading"
+              @click="addOrder()"
               >
           <v-icon>mdi-check</v-icon>
         </v-btn>
@@ -208,6 +210,7 @@
 <script>
 import { mapActions, mapGetters,mapMutations } from 'vuex'
 import confing from '@/api/config.js'
+import router from '@/router';
 import FullScreanFormDialog from '@/components/base/FullScreanFormDialog.vue';
     export default {
       components:{
@@ -216,6 +219,9 @@ import FullScreanFormDialog from '@/components/base/FullScreanFormDialog.vue';
       data: () => ({    
         baseUrl:confing.ProductImages,
         orderFormOpen:false,
+        req: [
+            v => !!v || "Zorunlu Alan",
+        ],
       }),        
       computed:{
         ...mapGetters({
@@ -230,7 +236,8 @@ import FullScreanFormDialog from '@/components/base/FullScreanFormDialog.vue';
           neighborhoods:'basket/getNeighborhoods',
           neighborhoodsLoading:'basket/getNeighborhoodsLoading',
           periots:'basket/getPeriots',
-          periotsLoading:'basket/getPeriotsLoading'
+          periotsLoading:'basket/getPeriotsLoading',
+          orderSaveLoading:'basket/getOrderSaveLoading',
         }),          
       },
       methods: {
@@ -241,7 +248,8 @@ import FullScreanFormDialog from '@/components/base/FullScreanFormDialog.vue';
            getProvincesAsync:'basket/getProvinces',
            getDistrictsAsnc:'basket/getDistricts',
            getNeighborhoodsAsync:'basket/getNeighborhoods',
-           getPeriotsLoadingAsync:'basket/getPeriaots'
+           getPeriotsLoadingAsync:'basket/getPeriaots',
+           addOrderAsync:'basket/addOrder',
           }),
           ...mapMutations({
             calculateBasketTotal:'basket/calculateBasketTotal'
@@ -258,6 +266,16 @@ import FullScreanFormDialog from '@/components/base/FullScreanFormDialog.vue';
             basket.totalPrice=result.basketTotal;
             this.calculateBasketTotal();
           },
+          async addOrder(){
+            if (this.$refs.addOrderValid.validate()) {
+                //apiler
+                var result = await this.addOrderAsync();
+                if (result.type == 2) {
+                  this.orderFormOpen=false;
+                  router.push("/products");
+                }
+            }
+          }
        },
        created(){
          this.getBaskets();

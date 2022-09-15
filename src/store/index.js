@@ -5,6 +5,8 @@ import product from './modules/product'
 import api from '../api/index'
 import gallery from './modules/gallery'
 import basket from './modules/basket'
+import order from './modules/order'
+import profile from './modules/profile'
 import router from '../router/index'
 
 Vue.use(Vuex)
@@ -227,5 +229,7 @@ export default new Vuex.Store({
     product,
     gallery,
     basket,
+    order,
+    profile,
   }
 })

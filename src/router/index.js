@@ -13,6 +13,7 @@ import invitationPage from'@/views/aboutPages/InvitationPage.vue'
 import StrabornPage from '@/views/aboutPages/StrabornPage.vue'
 import SalesAgreement from'@/views/aboutPages/SalesAgreement.vue'
 import SecurityPolicy from'@/views/aboutPages/SecurityPolicy.vue'
+import ProfilePage from '@/views/ProfilePage'
 
 Vue.use(VueRouter)
 
@@ -31,6 +32,11 @@ const routes = [
     path:'/basket',
     name:'basket',
     component:BasketPage
+  },
+  {
+    path:'/profile',
+    name:'profile',
+    component:ProfilePage
   },
   {
     path:'/orders',
