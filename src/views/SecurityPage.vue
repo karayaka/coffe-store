@@ -49,6 +49,18 @@
                                             <v-text-field v-model="registerModel.surname" :rules="[rules.required]" label="Soyad"
                                                 maxlength="20" required></v-text-field>
                                         </v-col>
+                                        <v-col cols="12" sm="6" md="6">
+                                            <v-text-field v-model="registerModel.identityNumber" :rules="[rules.required]" label="TC Kimlik No"
+                                                maxlength="20" required></v-text-field>
+                                        </v-col>
+                                        <v-col cols="12" sm="6" md="6">
+                                            <v-text-field v-model="registerModel.city" :rules="[rules.required]" label="Şehir"
+                                                maxlength="20" required></v-text-field>
+                                        </v-col>
+                                        <v-col cols="12">
+                                            <v-text-field v-model="registerModel.adressDetail" label="Adres Detay" required>
+                                            </v-text-field>
+                                        </v-col>
                                         <v-col cols="12">
                                             <v-text-field v-model="registerModel.email" label="Email" required>
                                             </v-text-field>
@@ -326,6 +338,9 @@ export default {
         },
         registerModel: {
             name: "",
+            identityNumber:"",
+            city:"",
+            adressDetail:"",
             surname: "",
             phoneNumber: "",
             password: "",

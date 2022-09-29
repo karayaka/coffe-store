@@ -7,6 +7,9 @@ export default {
         profileModel: {
             name: "",
             surname: "",
+            identityNumber:"",
+            city:"",
+            adressDetail:"",
             phoneNumber: "",
             password: "",
             verify: "",

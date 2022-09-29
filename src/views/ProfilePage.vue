@@ -23,6 +23,18 @@
                             <v-text-field v-model="profileModel.surname" :rules="[rules.required]" label="Soyad"
                                 maxlength="20" required></v-text-field>
                         </v-col>
+                        <v-col cols="12" sm="6" md="6">
+                            <v-text-field v-model="profileModel.identityNumber" :rules="[rules.required]" label="TC Kimlik No"
+                                maxlength="20" required></v-text-field>
+                        </v-col>
+                        <v-col cols="12" sm="6" md="6">
+                            <v-text-field v-model="profileModel.city" :rules="[rules.required]" label="Şehir"
+                                maxlength="20" required></v-text-field>
+                        </v-col>
+                        <v-col cols="12">
+                            <v-text-field v-model="profileModel.adressDetail" label="Adres Detay" required>
+                            </v-text-field>
+                        </v-col>
                         <v-col cols="12">
                             <v-text-field v-model="profileModel.email" label="Email" required>
                             </v-text-field>
