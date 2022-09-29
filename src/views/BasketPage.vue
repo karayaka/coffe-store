@@ -94,62 +94,101 @@
       v-model="orderFormOpen"
     >
       <template v-slot:form>
-        <v-form ref="addOrderValid" lazy-validation>
+        
           <v-row>
             <v-col cols="12" md="5" sm="11" class="ma-5">
-              <h3 class="mb-5">Adres Bilgileri</h3>
-              <v-autocomplete
-                v-model="orderForm.provinceID"
-                :items="provinces"
-                outlined
-                :loading="provincesLoading"
-                item-text="text"
-                item-value="value"
-                label="İl Seçiniz"
-                @change="getDistrictsAsnc"
-                :rules="req"
-              ></v-autocomplete>
-              <v-autocomplete
-                v-model="orderForm.districtID"
-                :items="districts"
-                outlined
-                :loading="districtLoading"
-                item-text="text"
-                item-value="value"
-                label="İlçe Seçiniz"
-                @change="getNeighborhoodsAsync"
-                :rules="req"
-              ></v-autocomplete>
-              <v-autocomplete
-                v-model="orderForm.neighborhoodID"
-                :items="neighborhoods"
-                outlined
-                :loading="neighborhoodsLoading"
-                item-text="text"
-                item-value="value"
-                label="Mahalle Seçiniz"
-                :rules="req"
-              ></v-autocomplete>
-              <v-textarea
-                autocomplete="address"
-                label="Adres Detay"
-                outlined
-                v-model="orderForm.adress"
-                :rules="req"
-              ></v-textarea>
-              <v-autocomplete
-                v-model="orderForm.deliveryPeriotID"
-                :items="periots"
-                outlined
-                :loading="periotsLoading"
-                item-text="text"
-                item-value="value"
-                label="Teslimat Periyotu Seçin"
-                :rules="req"
-              ></v-autocomplete>
-
-            </v-col>
+              <v-form ref="addressForm" lazy-validation>
+                <v-tabs v-model="orderForm.orderTypeStatus" show-arrows background-color="primary" icons-and-text dark grow>
+                  <v-tabs-slider color="primary"></v-tabs-slider>
+                  <v-tab v-for="i in tabs" :key="i.id">
+                      <v-icon large>{{ i.icon }}</v-icon>
+                      <div class="caption py-1">{{ i.name }}</div>
+                  </v-tab>
+                  <v-tab-item>
+                      
+                  </v-tab-item>
+                  <v-tab-item>
+                    <v-card >
+                          <v-card-text>
+                            <h3 class="mb-5">Adres Bilgileri</h3>
+                            <v-autocomplete
+                              v-model="orderForm.provinceID"
+                              :items="provinces"
+                              outlined
+                              :loading="provincesLoading"
+                              item-text="text"
+                              item-value="value"
+                              label="İl Seçiniz"
+                              @change="getDistrictsAsnc"
+                              :rules="req"
+                            ></v-autocomplete>
+                            <v-autocomplete
+                              v-model="orderForm.districtID"
+                              :items="districts"
+                              outlined
+                              :loading="districtLoading"
+                              item-text="text"
+                              item-value="value"
+                              label="İlçe Seçiniz"
+                              @change="getNeighborhoodsAsync"
+                              :rules="req"
+                            ></v-autocomplete>
+                            <v-autocomplete
+                              v-model="orderForm.neighborhoodID"
+                              :items="neighborhoods"
+                              outlined
+                              :loading="neighborhoodsLoading"
+                              item-text="text"
+                              item-value="value"
+                              label="Mahalle Seçiniz"
+                              :rules="req"
+                            ></v-autocomplete>
+                            <v-textarea
+                              autocomplete="address"
+                              label="Adres Detay"
+                              outlined
+                              v-model="orderForm.adress"
+                              :rules="req"
+                            ></v-textarea>
+                            
+                          </v-card-text>
+                      </v-card>
+                        
+                  </v-tab-item>
+                  <v-tab-item>
+                        
+                  </v-tab-item>
+                </v-tabs>
+              </v-form>
+              <v-form ref="periaotForm" lazy-validation>
+                <div class="pa-4">
+                  <v-autocomplete
+                    v-model="orderForm.deliveryPeriotID"
+                    :items="periots"
+                    outlined
+                    :loading="periotsLoading"
+                    item-text="text"
+                    item-value="value"
+                    label="Teslimat Periyotu Seçin"
+                    :rules="req"
+                  ></v-autocomplete>
+              </div>
+              </v-form>          
+            </v-col>          
             <v-col cols="12" md="6" sm="11" class="ma-5">
+              <v-row>
+              
+                <v-col>
+                    <v-img
+                        :src="require('@/assets/imgs/pay_colored.png')"
+                        class="lighten-2"
+                        width="550"
+                    ></v-img>
+                </v-col>
+              
+  
+              </v-row>
+            <v-form class="mt-10" ref="cardForm" lazy-validation>
               <h3 class="mb-5">Ödeme Bilgileri</h3>
               <v-text-field v-model="orderForm.cardNumber" 
                 outlined
@@ -186,13 +225,10 @@
                   </v-text-field>
                 </v-col>
               </v-row>
+            </v-form>            
             </v-col>
           </v-row>
-        </v-form>
-        
      
-        
-        
       </template>
       <template v-slot:confirmButton>
           <v-btn
@@ -221,6 +257,10 @@ import FullScreanFormDialog from '@/components/base/FullScreanFormDialog.vue';
         orderFormOpen:false,
         req: [
             v => !!v || "Zorunlu Alan",
+        ],
+        tabs: [
+            { id: 0, name: "Gel Al Sipariş", icon: "mdi-account" },
+            { id: 1, name: "Adrese Teslim", icon: "mdi-account-outline" },
         ],
       }),        
       computed:{
@@ -252,7 +292,8 @@ import FullScreanFormDialog from '@/components/base/FullScreanFormDialog.vue';
            addOrderAsync:'basket/addOrder',
           }),
           ...mapMutations({
-            calculateBasketTotal:'basket/calculateBasketTotal'
+            calculateBasketTotal:'basket/calculateBasketTotal',
+            showErrorMessage:'globalMessage/showErrorMessage',
           }),           
           async changeBasketQuantity(basket){
             basket.rowLoading=true;
@@ -267,14 +308,28 @@ import FullScreanFormDialog from '@/components/base/FullScreanFormDialog.vue';
             this.calculateBasketTotal();
           },
           async addOrder(){
-            if (this.$refs.addOrderValid.validate()) {
-                //apiler
-                var result = await this.addOrderAsync();
-                if (result.type == 2) {
-                  this.orderFormOpen=false;
-                  router.push("/products");
-                }
-            }
+            if(this.orderForm.orderTypeStatus==1){
+              if (this.$refs.addressForm.validate()&&
+                  this.$refs.periaotForm.validate()&&
+                  this.$refs.cardForm.validate()) {
+                  //apiler
+                  var result = await this.addOrderAsync();
+                  if (result.type == 2) {
+                    this.orderFormOpen=false;
+                    router.push("/products");
+                  }
+              }
+
+            }else{
+              if (this.$refs.periaotForm.validate()&&
+                  this.$refs.cardForm.validate()) {
+                    var result2 = await this.addOrderAsync();
+                    if (result2.type == 2) {
+                      this.orderFormOpen=false;
+                      router.push("/products");
+                    }
+                  }
+              }
           }
        },
        created(){

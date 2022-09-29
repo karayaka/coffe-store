@@ -16,7 +16,7 @@
           offset-md="6"
         >
           <h1 class="display-2 font-weight-light">
-            STRBORN Muhteşem Kahve
+            STRABORN Muhteşem Kahve
           </h1>
 
           <div class="subheading text-uppercase pl-2 mb-4">

@@ -3,11 +3,11 @@
         <h2>MESAFELİ SATIŞ SÖZLEŞMESİ</h2>
         <h3>MADDE 1 - SÖZLEŞMENİN TARAFLARI</h3>
         <h3>SATICI</h3>
-        <p>ÜNVANI : Firma Resmi adı</p>
-        <p>ADRES : firma adresi</p>
-        <p>TELEFON :</p>
+        <p>ÜNVANI : MEDYUN SAĞLIK ÖZEL EĞİTİM İNŞAAT GIDA YENİLENEBİLİR ENERJİ SAN. VE TİC. LTD. ŞTİ</p>
+        <p>ADRES : Anıttepe Mah. G.M.K Bul. No: 103/12 Çankaya/ Ankara</p>
+        
         <p>WEB : www.straborn.com</p>
-        <p>E-POSTA : resmi eposta</p>
+        <p>E-POSTA : info@straborn.com</p>
         <p>Bundan sonra SATICI olarak anılacaktır.</p>
         <h3>ALICI</h3>
         <p>ADI SOYADI / ÜNVANI : ......</p>

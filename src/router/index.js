@@ -14,6 +14,8 @@ import StrabornPage from '@/views/aboutPages/StrabornPage.vue'
 import SalesAgreement from'@/views/aboutPages/SalesAgreement.vue'
 import SecurityPolicy from'@/views/aboutPages/SecurityPolicy.vue'
 import ProfilePage from '@/views/ProfilePage'
+import CancellationPolicy from'@/views/aboutPages/CancellationPolicy.vue'
+import ContactPage from '@/views/aboutPages/ContactPage.vue'
 
 Vue.use(VueRouter)
 
@@ -54,6 +56,11 @@ const routes = [
     component:AboutStory,
   },
   {
+    path:'/cancellation-policy',
+    name:'cancellation-policy',
+    component:CancellationPolicy,
+  },
+  {
     path:'/work-with-us',
     name:'work-with-us',
     component:WorkWithUs,
@@ -87,17 +94,23 @@ const routes = [
     path:'/security-policy',
     name:'securitypolicy',
     component:SecurityPolicy,
+  },
+  {
+    path:'/contact-page',
+    name:'contactpage',
+    component:ContactPage,
   }
 ]
 
 const router = new VueRouter({
-  mode: 'history',
+  mode: 'hash',
   base: process.env.BASE_URL,
   routes
 })
 router.beforeEach((to, from, next) => {
   // şifres,z g,irilebilecek ekranlar!
   const publicPages = [
+    '/contact-page',
     '/Security',
     '/',
     '/products',
@@ -108,6 +121,7 @@ router.beforeEach((to, from, next) => {
     '/invitation-page',
     '/straborn-page',
     '/sales-agreement',
+    '/cancellation-policy',
     '/security-policy',
   ];
   const authRequired = !publicPages.includes(to.path);

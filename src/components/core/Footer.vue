@@ -6,7 +6,7 @@
   >
     <v-container class="mx-auto">
       <v-row>
-        <v-col cols="9">
+        <v-col cols="7">
           <base-btn
             v-for="(item, i) in items"
             :key="i"
@@ -19,9 +19,13 @@
             <v-icon v-text="item.icon" />
           </base-btn>
         </v-col>
-
-        <v-spacer />
-
+        <v-spacer/>
+          <v-col>
+              <v-img
+                  :src="require('@/assets/imgs/footer_pay.png')"                  
+                  width="400"
+              ></v-img>
+          </v-col>
         <base-btn
           class="mr-0"
           square
@@ -60,10 +64,6 @@
         {
           href: '#!',
           icon: 'mdi-reddit',
-        },
-        {
-          href: '#!',
-          icon: 'mdi-discord',
         },
         {
           href: '#!',

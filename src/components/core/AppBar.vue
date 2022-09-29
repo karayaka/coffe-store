@@ -7,14 +7,54 @@
     <v-row >
       <v-img
         :src="require('@/assets/logo.png')"
-        class="mr-15 ml-5"
+        class="mr-5 ml-5"
         contain
         height="48"
         width="48"
         max-width="48"
         @click="$vuetify.goTo(0)"
       />
+      <v-menu rounded open-on-hover offset-y transition="slide-x-transition" class="hidden-sm-and-up">
+        <template v-slot:activator="{ on, attrs }">
+            <v-btn text color="white" class="hidden-sm-and-up" v-bind="attrs" v-on="on">
+                Menu
+            </v-btn>
+        </template>
+        <v-list
+          nav
+          dense
+        >
+          <v-list-item link to="/">
+            <v-list-item-icon>
+              <v-icon>mdi-home</v-icon>
+            </v-list-item-icon>
+            <v-list-item-content>
+              <v-list-item-title>Ana Sayfa</v-list-item-title>
+            </v-list-item-content>
+                <v-icon>mdi-menu-right</v-icon>
+          </v-list-item>
 
+          <v-list-item link to="/products">
+            <v-list-item-icon>
+              <v-icon>mdi-widgets</v-icon>
+            </v-list-item-icon>
+            <v-list-item-content>
+              <v-list-item-title>Menu</v-list-item-title>
+            </v-list-item-content>
+                <v-icon>mdi-menu-right</v-icon>
+          </v-list-item>
+     
+        <v-list-item link to="/photoGallary">
+            <v-list-item-icon>
+              <v-icon>mdi-file-outline</v-icon>
+            </v-list-item-icon>
+            <v-list-item-content>
+              <v-list-item-title>Galari</v-list-item-title>
+            </v-list-item-content>
+                <v-icon>mdi-menu-right</v-icon>
+          </v-list-item>
+        </v-list>
+      </v-menu>
       <v-btn          
         class="hidden-sm-and-down"
         text
@@ -99,12 +139,30 @@
             </v-list-item-content>
                 <v-icon>mdi-menu-right</v-icon>
           </v-list-item>
+          <v-list-item link to="/cancellation-policy">
+            <v-list-item-icon>
+              <v-icon>mdi-file</v-icon>
+            </v-list-item-icon>
+            <v-list-item-content>
+              <v-list-item-title>İptal İade Şartnamesi</v-list-item-title>
+            </v-list-item-content>
+                <v-icon>mdi-menu-right</v-icon>
+          </v-list-item>
           <v-list-item link to="/security-policy">
             <v-list-item-icon>
               <v-icon> mdi-access-point-check </v-icon>
             </v-list-item-icon>
             <v-list-item-content>
               <v-list-item-title>Gizlilik Ve Güvenlik Politikası</v-list-item-title>
+            </v-list-item-content>
+                <v-icon>mdi-menu-right</v-icon>
+          </v-list-item>
+          <v-list-item link to="/contact-page">
+            <v-list-item-icon>
+              <v-icon>mdi-file-outline</v-icon>
+            </v-list-item-icon>
+            <v-list-item-content>
+              <v-list-item-title>İletişim</v-list-item-title>
             </v-list-item-content>
                 <v-icon>mdi-menu-right</v-icon>
           </v-list-item>
