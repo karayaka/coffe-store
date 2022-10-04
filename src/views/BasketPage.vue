@@ -93,7 +93,9 @@
       title="Sipariş Et"
       v-model="orderFormOpen"
     >
+    
       <template v-slot:form>
+        <global-toaster class="mt-10"/>
         
           <v-row>
             <v-col cols="12" md="5" sm="11" class="ma-5">
@@ -248,9 +250,11 @@ import { mapActions, mapGetters,mapMutations } from 'vuex'
 import confing from '@/api/config.js'
 import router from '@/router';
 import FullScreanFormDialog from '@/components/base/FullScreanFormDialog.vue';
+import GlobalToaster from '@/components/core/GlobalToaster.vue';
     export default {
       components:{
-        FullScreanFormDialog
+        FullScreanFormDialog,
+        GlobalToaster
       },
       data: () => ({    
         baseUrl:confing.ProductImages,

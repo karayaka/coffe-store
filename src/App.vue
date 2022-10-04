@@ -1,12 +1,13 @@
 <template>
   <v-app>
+    <global-toaster/>
     <app-bar></app-bar>
     <div class="my-15 mx-5">
       <router-view></router-view>
     </div>
     <v-spacer></v-spacer>
     <core-footer/>
-    <global-toaster/>
+    
   </v-app>
 </template>
 
